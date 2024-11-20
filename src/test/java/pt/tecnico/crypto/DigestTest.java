@@ -12,8 +12,13 @@ public class DigestTest {
 
 	/** Plain text to use with the digest. */
 	final String plainText = "This is the plain text!";
+	/** Plain text tampered. */
+	final String plainTextTampered = "This is the plain text?";
+
 	/** Plain text bytes. */
 	final byte[] plainBytes = plainText.getBytes();
+	/** Plain text bytes tampered. */
+	final byte[] plainBytesTampered = plainText.getBytes();
 
 	/** Digest algorithm. */
 	private static final String DIGEST_ALGO = "SHA-256";
@@ -35,8 +40,14 @@ public class DigestTest {
 		// get a message digest object using the specified algorithm
 		MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGO);
 
+		// Tampering the text
+		System.out.println("The text is being tampered replacing by:");
+		System.out.print(plainText);
+		System.out.print(" => ");
+		System.out.println(plainTextTampered);
+
 		System.out.println("Computing digest...");
-		messageDigest.update(plainBytes);
+		messageDigest.update(plainBytesTampered);
 		byte[] digest = messageDigest.digest();
 
 		System.out.println("Digest:");
@@ -44,6 +55,8 @@ public class DigestTest {
 
 		assertTrue("491e0b645f6d596b76529d2380b1bd96f5a1f7b83b51e64f49fd634d74cd7d15"
 				.equalsIgnoreCase(printHexBinary(digest)));
+
+		System.out.println("Even if the data is being tampered the Digest is the same");
 
 		System.out.println();
 		System.out.println();
