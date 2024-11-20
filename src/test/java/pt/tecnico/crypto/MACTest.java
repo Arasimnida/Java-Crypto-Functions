@@ -28,7 +28,7 @@ public class MACTest {
 	/** Plain text bytes. */
 	final byte[] plainBytes = plainText.getBytes();
 	/** Plain text bytes tampered. */
-	final byte[] plainBytesTampered = plainText.getBytes();
+	final byte[] plainBytesTampered = plainTextTampered.getBytes();
 
 	/** Symmetric cryptography algorithm. */
 	private static final String SYM_ALGO = "AES";
@@ -79,7 +79,6 @@ public class MACTest {
 		boolean result = verifyMAC(cipherDigest, plainBytesTampered, key);
 		System.out.println("MAC is " + (result ? "right" : "wrong"));
 		assertTrue(result);
-		System.out.println("Even if the data is being tampered the MAC is right");
 
 		System.out.println();
 		System.out.println();
@@ -153,7 +152,6 @@ public class MACTest {
 		boolean result = redigestDecipherAndCompare(cipherDigest, plainBytesTampered, key);
 		System.out.println("MAC is " + (result ? "right" : "wrong"));
 		assertTrue(result);
-		System.out.println("Even if the data is being tampered the MAC is right");
 
 		System.out.println();
 		System.out.println();
