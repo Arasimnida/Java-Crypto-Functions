@@ -22,6 +22,10 @@ public class DigitalSignatureTest {
 
 	/** Plain text to digest. */
 	private final String plainText = "This is the plain text!";
+	/** Plain text tampered. */
+	final String plainTextTampered = "This is the plain text?";
+	/** Plain text bytes tampered. */
+	final byte[] plainBytesTampered = plainTextTampered.getBytes();
 
 	/** Asymmetric cryptography algorithm. */
 	private static final String ASYM_ALGO = "RSA";
@@ -60,9 +64,15 @@ public class DigitalSignatureTest {
 		System.out.println("Signing...");
 		byte[] cipherDigest = makeDigitalSignature(plainBytes, key);
 
+		// Tampering the text
+		System.out.println("The text is being tampered replacing by:");
+		System.out.print(plainText);
+		System.out.print(" => ");
+		System.out.println(plainTextTampered);
+
 		// verify the signature
 		System.out.println("Verifying...");
-		boolean result = verifyDigitalSignature(cipherDigest, plainBytes, key);
+		boolean result = verifyDigitalSignature(cipherDigest, plainBytesTampered, key);
 		System.out.println("Signature is " + (result ? "right" : "wrong"));
 
 		assertTrue(result);
@@ -133,9 +143,15 @@ public class DigitalSignatureTest {
 		System.out.println("Signing...");
 		byte[] cipherDigest = digestAndCipher(plainBytes, key);
 
+		// Tampering the text
+		System.out.println("The text is being tampered replacing by:");
+		System.out.print(plainText);
+		System.out.print(" => ");
+		System.out.println(plainTextTampered);
+
 		// verify the signature
 		System.out.println("Verifying...");
-		boolean result = redigestDecipherCompare(cipherDigest, plainBytes, key);
+		boolean result = redigestDecipherCompare(cipherDigest, plainBytesTampered, key);
 		System.out.println("Signature is " + (result ? "right" : "wrong"));
 		assertTrue(result);
 

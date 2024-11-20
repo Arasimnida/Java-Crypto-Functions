@@ -12,8 +12,13 @@ public class DigestTest {
 
 	/** Plain text to use with the digest. */
 	final String plainText = "This is the plain text!";
+	/** Plain text tampered. */
+	final String plainTextTampered = "This is the plain text?";
+
 	/** Plain text bytes. */
 	final byte[] plainBytes = plainText.getBytes();
+	/** Plain text bytes tampered. */
+	final byte[] plainBytesTampered = plainTextTampered.getBytes();
 
 	/** Digest algorithm. */
 	private static final String DIGEST_ALGO = "SHA-256";
@@ -35,8 +40,14 @@ public class DigestTest {
 		// get a message digest object using the specified algorithm
 		MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGO);
 
+		// Tampering the text
+		System.out.println("The text is being tampered replacing by:");
+		System.out.print(plainText);
+		System.out.print(" => ");
+		System.out.println(plainTextTampered);
+
 		System.out.println("Computing digest...");
-		messageDigest.update(plainBytes);
+		messageDigest.update(plainBytesTampered);
 		byte[] digest = messageDigest.digest();
 
 		System.out.println("Digest:");
